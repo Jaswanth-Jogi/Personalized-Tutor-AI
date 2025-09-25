@@ -1,8 +1,7 @@
 import Link from 'next/link';
 import { Logo } from './logo';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
+import { SidebarTrigger } from '@/components/ui/sidebar';
 import { Star } from 'lucide-react';
 import { MOCK_USER } from '@/lib/constants';
 
@@ -10,10 +9,13 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center">
-        <div className="mr-4 flex">
+        <div className="mr-4 hidden items-center md:flex">
           <Link href="/" className="mr-6 flex items-center space-x-2">
             <Logo />
           </Link>
+        </div>
+        <div className="md:hidden">
+          <SidebarTrigger />
         </div>
         <div className="flex flex-1 items-center justify-end space-x-4">
           <div className="flex items-center gap-2">
