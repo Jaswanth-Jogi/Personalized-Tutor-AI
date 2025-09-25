@@ -56,7 +56,7 @@ const prompt = ai.definePrompt({
   name: 'generateTopicQuizPrompt',
   input: {schema: GenerateTopicQuizInputSchema},
   output: {schema: GenerateTopicQuizOutputSchema},
-  model: 'gemini-1.5-flash-latest',
+  model: 'googleai/gemini-1.5-flash-latest',
   prompt: `Generate a personalized quiz in JSON format based on the learning content, tailored to the child’s profile and current topic.
   - 5 to 10 questions (MCQ, fill-in, true/false).
   - Mix of difficulties.
@@ -65,8 +65,8 @@ const prompt = ai.definePrompt({
   Output:
   {
     "quiz": {
-      "childName": "{{childName}}",
-      "topic": "{{topic}}",
+      "childName": "{{{childName}}}",
+      "topic": "{{{topic}}}",
       "questions": [
         {
           "question": "[Question 1]",
@@ -84,11 +84,11 @@ const prompt = ai.definePrompt({
   }
 
   Child profile:
-  - Name: {{childName}}
-  - Age: {{age}}
-  - Grade: {{grade}}
-  Learning topic: {{topic}}
-  Learning content: {{learningContent}}
+  - Name: {{{childName}}}
+  - Age: {{{age}}}
+  - Grade: {{{grade}}}
+  Learning topic: {{{topic}}}
+  Learning content: {{{learningContent}}}
   `,
 });
 

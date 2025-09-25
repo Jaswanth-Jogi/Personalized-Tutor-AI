@@ -58,7 +58,7 @@ const learningModulePrompt = ai.definePrompt({
   name: 'learningModulePrompt',
   input: {schema: LearningModuleInputSchema},
   output: {schema: LearningModuleOutputSchema},
-  model: 'gemini-1.5-flash-latest',
+  model: 'googleai/gemini-1.5-flash-latest',
   prompt: `Generate a comprehensive learning module and prerequisite analysis report in JSON format for a child’s adaptive learning experience.
 Child profile:
 - Name: {{{childName}}}
