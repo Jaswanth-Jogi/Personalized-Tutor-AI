@@ -7,7 +7,10 @@ import { MOCK_USER } from './constants';
 import type { Subject, QuizResult } from './definitions';
 
 // In-memory store to simulate a database
-let subjects: Subject[] = [];
+let subjects: Subject[] = [
+    { id: '1', name: 'Mathematics', progress: 75, stars: 4 },
+    { id: '2', name: 'Science', progress: 50, stars: 3 },
+];
 
 let topicsBySubject: Record<string, string[]> = {
     "Mathematics": ["Algebra", "Geometry", "Calculus"],
@@ -31,6 +34,8 @@ export async function addSubject(
   const newSubject: Subject = {
     id: (subjects.length + 1).toString(),
     name,
+    progress: 0,
+    stars: 0,
   };
   subjects.push(newSubject);
   
