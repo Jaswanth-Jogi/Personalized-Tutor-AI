@@ -22,7 +22,7 @@ export function Header() {
           </div>
           <Avatar>
             <AvatarImage src="https://picsum.photos/seed/avatar/100/100" data-ai-hint="anime avatar" />
-            <AvatarFallback>{MOCK_USER.name.charAt(0)}</AvatarFallback>
+            <AvatarFallback>{MOCK_USER.childName.charAt(0)}</AvatarFallback>
           </Avatar>
         </div>
       </div>

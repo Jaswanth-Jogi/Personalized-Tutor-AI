@@ -1,5 +1,5 @@
 export const MOCK_USER = {
-    name: 'Alex',
+    childName: 'Alex',
     age: 10,
     grade: '5th Grade',
 };
