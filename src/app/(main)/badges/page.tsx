@@ -1,25 +1,27 @@
 import Image from 'next/image';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
-import { Award } from 'lucide-react';
+import { Award, ShieldQuestion } from 'lucide-react';
 
-const earnedBadges = [
+const availableBadges = [
   {
     id: 'badge-default',
     name: 'Topic Master',
-    description: 'Mastered your first topic!',
+    description: 'Master your first topic!',
   },
   {
     id: 'badge-math-whiz',
     name: 'Math Whiz',
-    description: 'Completed 3 math topics.',
+    description: 'Complete 3 math topics.',
   },
   {
     id: 'badge-science-explorer',
     name: 'Science Explorer',
-    description: 'Explored the wonders of science.',
+    description: 'Explore the wonders of science.',
   },
 ];
+
+const earnedBadges: { id: string }[] = []; // This would be dynamic in a real app
 
 export default function BadgesPage() {
   return (
@@ -27,28 +29,33 @@ export default function BadgesPage() {
       <div>
         <h1 className="text-4xl font-bold font-headline tracking-tight">Your Badge Collection</h1>
         <p className="text-muted-foreground mt-2 text-lg">
-          Check out all the cool badges you've earned on your learning journey!
+          Here are all the badges you can earn. Keep learning to collect them all!
         </p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {earnedBadges.map((badge) => {
+        {availableBadges.map((badge) => {
           const placeholder = PlaceHolderImages.find((p) => p.id === badge.id);
+          const isEarned = earnedBadges.some(b => b.id === badge.id);
           return (
-            <Card key={badge.id} className="flex flex-col items-center justify-center text-center p-6 glow-primary-hover">
-              {placeholder && (
+            <Card key={badge.id} className={`flex flex-col items-center justify-center text-center p-6 transition-all ${isEarned ? 'glow-primary-hover' : 'opacity-60'}`}>
+              {placeholder ? (
                 <Image
                   src={placeholder.imageUrl}
                   alt={placeholder.description}
                   width={120}
                   height={120}
-                  className="rounded-full border-4 border-primary/50 shadow-lg mb-4"
+                  className={`rounded-full border-4 shadow-lg mb-4 ${isEarned ? 'border-primary/50' : 'border-muted/20 grayscale'}`}
                   data-ai-hint={placeholder.imageHint}
                 />
+              ) : (
+                <div className="w-[120px] h-[120px] rounded-full border-4 border-muted/20 bg-muted/10 flex items-center justify-center mb-4">
+                  <ShieldQuestion className="h-12 w-12 text-muted-foreground" />
+                </div>
               )}
               <CardHeader className="p-0">
                 <CardTitle className="font-headline text-xl flex items-center gap-2">
-                    <Award className="h-5 w-5 text-primary" />
+                    <Award className={`h-5 w-5 ${isEarned ? 'text-primary' : 'text-muted-foreground'}`} />
                     {badge.name}
                 </CardTitle>
               </CardHeader>
