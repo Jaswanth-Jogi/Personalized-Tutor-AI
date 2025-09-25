@@ -1,3 +1,4 @@
+
 import Link from 'next/link';
 import { Suspense } from 'react';
 import { generateLearningModule } from '@/ai/flows/generate-learning-module';
@@ -5,8 +6,9 @@ import { MOCK_USER } from '@/lib/constants';
 import { LearningModuleView } from '@/app/components/learning/learning-module-view';
 import { LoadingSpinner } from '@/app/components/ui/loading-spinner';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
-import { PrerequisiteCheck } from '@/app/components/learning/prerequisite-check';
+import { ArrowLeft, AlertTriangle } from 'lucide-react';
+import { PrerequisiteCheckWrapper } from '@/app/components/learning/prerequisite-check-wrapper';
+import { Card } from '@/components/ui/card';
 
 type LearningPageProps = {
   params: {
@@ -38,35 +40,29 @@ export default function LearningPage({ params }: LearningPageProps) {
       <Suspense fallback={<LoadingModule />}>
         <LearningModule subject={subject} topic={topic} />
       </Suspense>
-
-      <div className="flex justify-center mt-8">
-        <Link href={`/subjects/${encodeURIComponent(subject)}/${encodeURIComponent(topic)}/quiz`}>
-          <Button size="lg" className="button-smash text-lg font-bold gap-2 group">
-            Ready for a Quiz!
-            <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
-          </Button>
-        </Link>
-      </div>
     </div>
   );
 }
 
 async function LearningModule({ subject, topic }: { subject: string, topic: string }) {
-  const moduleData = await generateLearningModule({ ...MOCK_USER, topic, pastPerformance: 'None' });
-  
-  const hasMissingFoundations = moduleData.prerequisiteCheck.missingFoundations && moduleData.prerequisiteCheck.missingFoundations.length > 0;
+  try {
+    const moduleData = await generateLearningModule({ ...MOCK_USER, topic, pastPerformance: 'None' });
+    
+    const hasMissingFoundations = moduleData.prerequisiteCheck.missingFoundations && moduleData.prerequisiteCheck.missingFoundations.length > 0;
 
-  return (
-    <>
-      {hasMissingFoundations ? (
-        <PrerequisiteCheck subject={subject} prerequisiteData={moduleData.prerequisiteCheck}>
-            <LearningModuleView module={moduleData} />
-        </PrerequisiteCheck>
-      ) : (
+    return (
+      <PrerequisiteCheckWrapper 
+        subject={subject} 
+        prerequisiteData={moduleData.prerequisiteCheck} 
+        showModal={hasMissingFoundations}
+      >
         <LearningModuleView module={moduleData} />
-      )}
-    </>
-  )
+      </PrerequisiteCheckWrapper>
+    )
+  } catch (error) {
+    console.error(error);
+    return <ErrorCard />;
+  }
 }
 
 function LoadingModule() {
@@ -77,4 +73,18 @@ function LoadingModule() {
         <p className="text-muted-foreground max-w-md">Our AI is putting together a personalized learning experience just for you. This might take a moment!</p>
     </div>
   )
+}
+
+function ErrorCard() {
+    return (
+        <Card className="flex flex-col items-center justify-center text-center gap-4 p-8 min-h-[400px] bg-destructive/10 border-destructive/20 text-destructive-foreground">
+            <div className="bg-destructive/20 p-3 rounded-full">
+                <AlertTriangle className="h-12 w-12 text-destructive" />
+            </div>
+            <h3 className="text-xl font-semibold font-headline">Something Went Wrong</h3>
+            <p className="max-w-md">
+                We couldn't generate your learning module. The AI model might be overloaded. Please try refreshing the page in a few moments.
+            </p>
+        </Card>
+    );
 }

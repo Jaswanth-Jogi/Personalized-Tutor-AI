@@ -1,6 +1,6 @@
+
 import Link from 'next/link';
 import { Suspense } from 'react';
-import { MOCK_USER } from '@/lib/constants';
 import { QuizView } from '@/app/components/quiz/quiz-view';
 import { LoadingSpinner } from '@/app/components/ui/loading-spinner';
 import { Button } from '@/components/ui/button';

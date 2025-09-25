@@ -3,7 +3,6 @@
 
 import { useState, useEffect, type PropsWithChildren } from 'react';
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
 import type { LearningModuleOutput } from '@/ai/flows/generate-learning-module';
 import {
   Dialog,
@@ -14,34 +13,35 @@ import {
   DialogFooter,
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { AlertTriangle, ArrowRight, SkipForward } from 'lucide-react';
 import { addSubjectTopic } from '@/lib/actions';
 
-type PrerequisiteCheckProps = PropsWithChildren<{
+type PrerequisiteCheckWrapperProps = PropsWithChildren<{
   subject: string;
   prerequisiteData: LearningModuleOutput['prerequisiteCheck'];
+  showModal: boolean;
 }>;
 
-export function PrerequisiteCheck({ subject, prerequisiteData, children }: PrerequisiteCheckProps) {
-  const [showModal, setShowModal] = useState(false);
+export function PrerequisiteCheckWrapper({ subject, prerequisiteData, showModal, children }: PrerequisiteCheckWrapperProps) {
+  const [isModalOpen, setIsModalOpen] = useState(showModal);
   const router = useRouter();
 
   useEffect(() => {
-    // Open the modal automatically on component mount
-    setShowModal(true);
-  }, []);
+    setIsModalOpen(showModal);
+  }, [showModal]);
 
   const handleTopicClick = async (topic: string) => {
-    // This assumes a new topic can be added this way.
-    // In a real app, you might need a more robust system.
     await addSubjectTopic(subject, topic);
     router.push(`/subjects/${encodeURIComponent(subject)}/${encodeURIComponent(topic)}`);
   };
 
+  if (!showModal) {
+    return <>{children}</>;
+  }
+
   return (
     <>
-      <Dialog open={showModal} onOpenChange={setShowModal}>
+      <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
         <DialogContent className="sm:max-w-lg">
           <DialogHeader>
             <div className="flex justify-center mb-4">
@@ -76,7 +76,7 @@ export function PrerequisiteCheck({ subject, prerequisiteData, children }: Prere
           </div>
           
           <DialogFooter className="sm:justify-between gap-2">
-            <Button variant="ghost" onClick={() => setShowModal(false)} className="flex items-center gap-2">
+            <Button variant="ghost" onClick={() => setIsModalOpen(false)} className="flex items-center gap-2">
               <SkipForward className="h-4 w-4" />
               Skip and Continue
             </Button>
@@ -92,8 +92,7 @@ export function PrerequisiteCheck({ subject, prerequisiteData, children }: Prere
         </DialogContent>
       </Dialog>
       
-      {/* The original content is rendered but hidden until modal is closed */}
-      {!showModal && children}
+      {!isModalOpen && children}
     </>
   );
 }
