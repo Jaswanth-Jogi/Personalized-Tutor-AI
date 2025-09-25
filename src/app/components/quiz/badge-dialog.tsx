@@ -12,23 +12,39 @@ import Image from 'next/image';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { useEffect, useState } from 'react';
 import { PartyPopper } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 type BadgeDialogProps = {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
 };
 
+const BADGE_ID = 'badge-default';
+
 export function BadgeDialog({ isOpen, setIsOpen }: BadgeDialogProps) {
-  const badgeImage = PlaceHolderImages.find(p => p.id === 'badge-default');
+  const badgeImage = PlaceHolderImages.find(p => p.id === BADGE_ID);
   const [showConfetti, setShowConfetti] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     if (isOpen) {
+      // Save badge to local storage
+      const earnedBadges = JSON.parse(localStorage.getItem('earnedBadges') || '[]');
+      if (!earnedBadges.some((b: { id: string }) => b.id === BADGE_ID)) {
+        earnedBadges.push({ id: BADGE_ID });
+        localStorage.setItem('earnedBadges', JSON.stringify(earnedBadges));
+      }
+
       setShowConfetti(true);
       const timer = setTimeout(() => setShowConfetti(false), 3000);
       return () => clearTimeout(timer);
     }
   }, [isOpen]);
+
+  const handleClose = () => {
+    setIsOpen(false);
+    router.push('/badges');
+  }
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -56,8 +72,8 @@ export function BadgeDialog({ isOpen, setIsOpen }: BadgeDialogProps) {
             )}
             <p className="font-bold text-lg">Topic Master</p>
         </div>
-        <Button onClick={() => setIsOpen(false)} className="w-full button-smash">
-            Awesome!
+        <Button onClick={handleClose} className="w-full button-smash">
+            View My Badges
         </Button>
       </DialogContent>
     </Dialog>

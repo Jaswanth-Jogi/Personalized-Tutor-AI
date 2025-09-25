@@ -1,7 +1,10 @@
+'use client';
+
 import Image from 'next/image';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Award, ShieldQuestion } from 'lucide-react';
+import { useState, useEffect } from 'react';
 
 const availableBadges = [
   {
@@ -21,9 +24,16 @@ const availableBadges = [
   },
 ];
 
-const earnedBadges: { id: string }[] = []; // This would be dynamic in a real app
-
 export default function BadgesPage() {
+    const [earnedBadges, setEarnedBadges] = useState<{ id: string }[]>([]);
+    const [isClient, setIsClient] = useState(false);
+
+    useEffect(() => {
+        setIsClient(true);
+        const storedBadges = JSON.parse(localStorage.getItem('earnedBadges') || '[]');
+        setEarnedBadges(storedBadges);
+    }, []);
+
   return (
     <div className="flex flex-col gap-8">
       <div>
@@ -36,7 +46,7 @@ export default function BadgesPage() {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {availableBadges.map((badge) => {
           const placeholder = PlaceHolderImages.find((p) => p.id === badge.id);
-          const isEarned = earnedBadges.some(b => b.id === badge.id);
+          const isEarned = isClient && earnedBadges.some(b => b.id === badge.id);
           return (
             <Card key={badge.id} className={`flex flex-col items-center justify-center text-center p-6 transition-all ${isEarned ? 'glow-primary-hover' : 'opacity-60'}`}>
               {placeholder ? (
