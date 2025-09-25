@@ -37,6 +37,7 @@ const generateTopicListPrompt = ai.definePrompt({
   name: 'generateTopicListPrompt',
   input: {schema: GenerateTopicListInputSchema},
   output: {schema: GenerateTopicListOutputSchema},
+  model: 'gemini-1.5-flash-latest',
   prompt: `Generate a logically ordered, curriculum-aligned topic list for the subject {{subject}} for a child named {{childName}}, age {{age}}, grade {{grade}}.
 Use educational standards for this grade, going foundational to advanced.
 If prior performance data exists (strengths, weaknesses, completed topics), adapt recommendations.

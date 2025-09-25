@@ -58,13 +58,14 @@ const learningModulePrompt = ai.definePrompt({
   name: 'learningModulePrompt',
   input: {schema: LearningModuleInputSchema},
   output: {schema: LearningModuleOutputSchema},
+  model: 'gemini-1.5-flash-latest',
   prompt: `Generate a comprehensive learning module and prerequisite analysis report in JSON format for a child’s adaptive learning experience.
 Child profile:
-- Name: {{childName}}
-- Age: {{age}}
-- Grade: {{grade}}
-Learning topic: {{topic}}
-Past performance: {{pastPerformance}}
+- Name: {{{childName}}}
+- Age: {{{age}}}
+- Grade: {{{grade}}}
+Learning topic: {{{topic}}}
+Past performance: {{{pastPerformance}}}
 Instructions:
   1. Create engaging, personalized explanation/lesson content (interactive and positive).
   2. Include a ‘Did You Know?’ fun fact.
@@ -73,14 +74,14 @@ Instructions:
 Output:
 {
   'learningContent': {
-    'childName': '{{childName}}',
-    'age': {{age}},
-    'grade': '{{grade}}',
-    'topic': '{{topic}}',
+    'childName': '{{{childName}}}',
+    'age': {{{age}}},
+    'grade': '{{{grade}}}',
+    'topic': '{{{topic}}}',
     'content': '[Personalized content with interactivity and Did You Know]'
   },
   'prerequisiteCheck': {
-    'topic': '{{topic}}',
+    'topic': '{{{topic}}}',
     'requiredFoundations': '[List of prerequisites]',
     'completedFoundations': '[List of completed prerequisites]',
     'missingFoundations': '[List any missing prerequisites]',
