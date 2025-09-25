@@ -39,7 +39,7 @@ const LearningModuleOutputSchema = z.object({
     topic: z.string().describe('The specific learning topic.'),
     requiredFoundations: z.string().describe('List of prerequisites.'),
     completedFoundations: z.string().describe('List of completed prerequisites.'),
-    missingFoundations: z.string().describe('List any missing prerequisites.'),
+    missingFoundations: z.array(z.string()).describe('List of topic names for missing prerequisites.'),
     recommendation: z
       .string()
       .describe('Customized recommendation based on prerequisite analysis.'),
@@ -61,31 +61,32 @@ const learningModulePrompt = ai.definePrompt({
   model: 'googleai/gemini-1.5-flash-latest',
   prompt: `Generate a comprehensive learning module and prerequisite analysis report in JSON format for a child’s adaptive learning experience.
 Child profile:
-- Name: {{{childName}}}
-- Age: {{{age}}}
-- Grade: {{{grade}}}
-Learning topic: {{{topic}}}
-Past performance: {{{pastPerformance}}}
+- Name: {{childName}}
+- Age: {{age}}
+- Grade: {{grade}}
+Learning topic: {{topic}}
+Past performance: {{pastPerformance}}
 Instructions:
   1. Create engaging, personalized explanation/lesson content (interactive and positive).
   2. Include a ‘Did You Know?’ fun fact.
   3. Analyze prerequisites needed for this topic.
   4. Compare to past data, identify gaps, give tailored recommendation.
+  5. For missingFoundations, provide a list of topic names.
 Output:
 {
-  'learningContent': {
-    'childName': '{{{childName}}}',
-    'age': {{{age}}},
-    'grade': '{{{grade}}}',
-    'topic': '{{{topic}}}',
-    'content': '[Personalized content with interactivity and Did You Know]'
+  "learningContent": {
+    "childName": "{{childName}}",
+    "age": {{age}},
+    "grade": "{{grade}}",
+    "topic": "{{topic}}",
+    "content": "[Personalized content with interactivity and Did You Know]"
   },
-  'prerequisiteCheck': {
-    'topic': '{{{topic}}}',
-    'requiredFoundations': '[List of prerequisites]',
-    'completedFoundations': '[List of completed prerequisites]',
-    'missingFoundations': '[List any missing prerequisites]',
-    'recommendation': '[Customized recommendation]'
+  "prerequisiteCheck": {
+    "topic": "{{topic}}",
+    "requiredFoundations": "[List of prerequisites]",
+    "completedFoundations": "[List of completed prerequisites]",
+    "missingFoundations": ["[Topic 1]", "[Topic 2]"],
+    "recommendation": "[Customized recommendation]"
   }
 }`,
 });

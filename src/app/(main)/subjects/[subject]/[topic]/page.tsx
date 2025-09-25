@@ -6,6 +6,7 @@ import { LearningModuleView } from '@/app/components/learning/learning-module-vi
 import { LoadingSpinner } from '@/app/components/ui/loading-spinner';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { PrerequisiteCheck } from '@/app/components/learning/prerequisite-check';
 
 type LearningPageProps = {
   params: {
@@ -35,7 +36,7 @@ export default function LearningPage({ params }: LearningPageProps) {
       </div>
 
       <Suspense fallback={<LoadingModule />}>
-        <LearningModule topic={topic} />
+        <LearningModule subject={subject} topic={topic} />
       </Suspense>
 
       <div className="flex justify-center mt-8">
@@ -50,9 +51,22 @@ export default function LearningPage({ params }: LearningPageProps) {
   );
 }
 
-async function LearningModule({ topic }: { topic: string }) {
+async function LearningModule({ subject, topic }: { subject: string, topic: string }) {
   const moduleData = await generateLearningModule({ ...MOCK_USER, topic, pastPerformance: 'None' });
-  return <LearningModuleView module={moduleData} />;
+  
+  const hasMissingFoundations = moduleData.prerequisiteCheck.missingFoundations && moduleData.prerequisiteCheck.missingFoundations.length > 0;
+
+  return (
+    <>
+      {hasMissingFoundations ? (
+        <PrerequisiteCheck subject={subject} prerequisiteData={moduleData.prerequisiteCheck}>
+            <LearningModuleView module={moduleData} />
+        </PrerequisiteCheck>
+      ) : (
+        <LearningModuleView module={moduleData} />
+      )}
+    </>
+  )
 }
 
 function LoadingModule() {
