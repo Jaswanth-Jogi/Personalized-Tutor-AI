@@ -8,8 +8,8 @@ import type { Subject, QuizResult } from './definitions';
 
 // In-memory store to simulate a database
 let subjects: Subject[] = [
-    { id: '1', name: 'Mathematics', progress: 75, stars: 4 },
-    { id: '2', name: 'Science', progress: 50, stars: 3 },
+    { id: '1', name: 'Mathematics', progress: 0, stars: 0 },
+    { id: '2', name: 'Science', progress: 0, stars: 0 },
 ];
 
 let topicsBySubject: Record<string, string[]> = {
