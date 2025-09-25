@@ -1,3 +1,46 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "subject-mathematics",
+      "description": "An abstract image representing mathematics",
+      "imageUrl": "https://images.unsplash.com/photo-1623433302982-7f165ae4f9ef?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxhYnN0cmFjdCUyMG1hdGh8ZW58MHx8fHwxNzU4NzA5MTEwfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "abstract math"
+    },
+    {
+      "id": "subject-science",
+      "description": "A vibrant image representing scientific discovery",
+      "imageUrl": "https://images.unsplash.com/photo-1599625803125-6efff06c9c37?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxnYWxheHklMjBuZWJ1bGF8ZW58MHx8fHwxNzU4NzI5MDM3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "galaxy nebula"
+    },
+    {
+      "id": "subject-history",
+      "description": "An ancient map representing history",
+      "imageUrl": "https://images.unsplash.com/photo-1691506513931-4740e203d1a0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxhbmNpZW50JTIwbWFwfGVufDB8fHx8MTc1ODc5OTA2NHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "ancient map"
+    },
+    {
+      "id": "subject-geography",
+      "description": "A beautiful landscape representing geography",
+      "imageUrl": "https://images.unsplash.com/photo-1611080402167-ed75bae6df32?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxtb3VudGFpbiUyMGxhbmRzY2FwZXxlbnwwfHx8fDE3NTg3OTQ5Nzd8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "mountain landscape"
+    },
+    {
+      "id": "subject-art",
+      "description": "A colorful abstract painting representing art",
+      "imageUrl": "https://images.unsplash.com/photo-1533208087231-c3618eab623c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxhYnN0cmFjdCUyMHBhaW50aW5nfGVufDB8fHx8MTc1ODY4NDU3Nnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "abstract painting"
+    },
+    {
+      "id": "subject-default",
+      "description": "A playful abstract image for a generic subject",
+      "imageUrl": "https://images.unsplash.com/photo-1612742034062-9714e6bd1792?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxjb2xvcmZ1bCUyMGFic3RyYWN0fGVufDB8fHx8MTc1ODcxMTkzN3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "colorful abstract"
+    },
+    {
+      "id": "badge-default",
+      "description": "A shiny gold medal for a default badge",
+      "imageUrl": "https://images.unsplash.com/photo-1613826488066-5a115a53a1fc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxnb2xkJTIwbWVkYWx8ZW58MHx8fHwxNzU4NzExOTU4fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "gold medal"
+    }
+  ]
 }
