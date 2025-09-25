@@ -24,23 +24,31 @@ const GenerateTopicQuizOutputSchema = z.object({
   quiz: z.object({
     childName: z.string().describe("The child's name."),
     topic: z.string().describe('The learning topic.'),
-    questions: z.array(
-      z.object({
-        question: z.string().describe('The quiz question.'),
+    questions: z
+      .array(
+        z.object({
+          question: z.string().describe('The quiz question.'),
+          options: z.array(z.string()).describe('The possible answer options.'),
+          answer: z.string().describe('The correct answer.'),
+        })
+      )
+      .describe('The list of quiz questions.'),
+    bonusQuestion: z
+      .object({
+        question: z.string().describe('The bonus question.'),
         options: z.array(z.string()).describe('The possible answer options.'),
         answer: z.string().describe('The correct answer.'),
       })
-    ).describe('The list of quiz questions.'),
-    bonusQuestion: z.object({
-      question: z.string().describe('The bonus question.'),
-      options: z.array(z.string()).describe('The possible answer options.'),
-      answer: z.string().describe('The correct answer.'),
-    }).describe('The bonus question.'),
+      .describe('The bonus question.'),
   }).describe('The generated quiz.'),
 });
-export type GenerateTopicQuizOutput = z.infer<typeof GenerateTopicQuizOutputSchema>;
+export type GenerateTopicQuizOutput = z.infer<
+  typeof GenerateTopicQuizOutputSchema
+>;
 
-export async function generateTopicQuiz(input: GenerateTopicQuizInput): Promise<GenerateTopicQuizOutput> {
+export async function generateTopicQuiz(
+  input: GenerateTopicQuizInput
+): Promise<GenerateTopicQuizOutput> {
   return generateTopicQuizFlow(input);
 }
 
@@ -75,11 +83,11 @@ const prompt = ai.definePrompt({
   }
 
   Child profile:
-  - Name: {{{childName}}}
-  - Age: {{{age}}}
-  - Grade: {{{grade}}}
-  Learning topic: {{{topic}}}
-  Learning content: {{{learningContent}}}
+  - Name: {{childName}}
+  - Age: {{age}}
+  - Grade: {{grade}}
+  Learning topic: {{topic}}
+  Learning content: {{learningContent}}
   `,
 });
 

@@ -16,7 +16,10 @@ const LearningModuleInputSchema = z.object({
   age: z.number().describe("The child's age."),
   grade: z.string().describe("The child's grade level."),
   topic: z.string().describe('The specific learning topic.'),
-  pastPerformance: z.string().optional().describe('A summary of the child\'s past performance data.'),
+  pastPerformance: z
+    .string()
+    .optional()
+    .describe("A summary of the child's past performance data."),
 });
 export type LearningModuleInput = z.infer<typeof LearningModuleInputSchema>;
 
@@ -26,20 +29,28 @@ const LearningModuleOutputSchema = z.object({
     age: z.number().describe("The child's age."),
     grade: z.string().describe("The child's grade level."),
     topic: z.string().describe('The specific learning topic.'),
-    content: z.string().describe('Personalized learning content with interactivity and a Did You Know? fact.'),
+    content: z
+      .string()
+      .describe(
+        'Personalized learning content with interactivity and a Did You Know? fact.'
+      ),
   }),
   prerequisiteCheck: z.object({
     topic: z.string().describe('The specific learning topic.'),
     requiredFoundations: z.string().describe('List of prerequisites.'),
     completedFoundations: z.string().describe('List of completed prerequisites.'),
     missingFoundations: z.string().describe('List any missing prerequisites.'),
-    recommendation: z.string().describe('Customized recommendation based on prerequisite analysis.'),
+    recommendation: z
+      .string()
+      .describe('Customized recommendation based on prerequisite analysis.'),
   }),
 });
 
 export type LearningModuleOutput = z.infer<typeof LearningModuleOutputSchema>;
 
-export async function generateLearningModule(input: LearningModuleInput): Promise<LearningModuleOutput> {
+export async function generateLearningModule(
+  input: LearningModuleInput
+): Promise<LearningModuleOutput> {
   return generateLearningModuleFlow(input);
 }
 
