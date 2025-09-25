@@ -56,7 +56,7 @@ async function LearningModule({ subject, topic }: { subject: string, topic: stri
         prerequisiteData={moduleData.prerequisiteCheck} 
         showModal={hasMissingFoundations}
       >
-        <LearningModuleView module={moduleData} />
+        <LearningModuleView module={moduleData} subject={subject} />
       </PrerequisiteCheckWrapper>
     )
   } catch (error) {
