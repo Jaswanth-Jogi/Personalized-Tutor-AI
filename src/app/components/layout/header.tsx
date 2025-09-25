@@ -1,21 +1,62 @@
 import Link from 'next/link';
 import { Logo } from './logo';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { SidebarTrigger } from '@/components/ui/sidebar';
-import { Star } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { Star, Menu, Book } from 'lucide-react';
 import { MOCK_USER } from '@/lib/constants';
+import type { Subject } from '@/lib/definitions';
 
-export function Header() {
+type HeaderProps = {
+  subjects: Subject[];
+};
+
+export function Header({ subjects }: HeaderProps) {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center">
-        <div className="mr-4 hidden items-center md:flex">
+        <div className="mr-4 flex items-center">
           <Link href="/" className="mr-6 flex items-center space-x-2">
             <Logo />
           </Link>
+          <nav className="hidden items-center space-x-6 text-sm font-medium md:flex">
+            {subjects.map((subject) => (
+              <Link
+                key={subject.id}
+                href={`/subjects/${encodeURIComponent(subject.name)}`}
+                className="transition-colors hover:text-foreground/80 text-foreground/60"
+              >
+                {subject.name}
+              </Link>
+            ))}
+          </nav>
         </div>
         <div className="md:hidden">
-          <SidebarTrigger />
+            <Sheet>
+                <SheetTrigger asChild>
+                    <Button variant="ghost" size="icon">
+                        <Menu />
+                        <span className="sr-only">Toggle Menu</span>
+                    </Button>
+                </SheetTrigger>
+                <SheetContent side="left">
+                    <div className="p-4">
+                        <Logo />
+                        <nav className="mt-8 flex flex-col space-y-4">
+                        <Link href="/" className="font-medium">Dashboard</Link>
+                        {subjects.map((subject) => (
+                          <Link
+                            key={subject.id}
+                            href={`/subjects/${encodeURIComponent(subject.name)}`}
+                            className="font-medium text-muted-foreground"
+                          >
+                            {subject.name}
+                          </Link>
+                        ))}
+                        </nav>
+                    </div>
+                </SheetContent>
+            </Sheet>
         </div>
         <div className="flex flex-1 items-center justify-end space-x-4">
           <div className="flex items-center gap-2">
